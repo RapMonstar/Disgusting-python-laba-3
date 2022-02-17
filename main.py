@@ -26,49 +26,103 @@ class Vector:
 
 
 class Rectangle(Vector):
-    def __init__(self, a, b, c, d, aRoute, bRoute, cRoute, dRoute):
+    def __init__(self, a, b, c, d):
         self.a = a
         self.b = b
         self.c = c
         self.d = d
-        self.aRoute = aRoute
-        self.bRoute = bRoute
-        self.cRoute = cRoute
-        self.dRoute = dRoute
 
     def s(self):
         return self.a * self.b
 
-    def check(self):
-        if self.a == self.c and self.b == self.d and self.aRoute[1] == self.bRoute[0] and self.bRoute[1] == \
-                self.cRoute[0] and self.cRoute[1] == self.dRoute[0] and self.dRoute[1] == self.aRoute[
-            0]:
-            print('Cтороны подходят! Проверка прошла успешно!')
-            print('Площадь прямоугольника:', r.s())
-        else:
-            print('Стороны не подходят,нужны другие')
+    def find_coordinatesAB(self):
+        coordinates = []
+        for i in range(2):
+            coordinates.append(self.b[i] - (self.a[i]))
+
+        return coordinates
+
+    def find_coordinatesCD(self):
+        coordinates = []
+        for i in range(2):
+            coordinates.append(self.d[i] - (self.c[i]))
+            # print(d[i],c[i])
+            # print(coordinates)
+
+        return coordinates
+
+    def find_coordinatesAD(self):
+        coordinates = []
+        for i in range(2):
+            coordinates.append(self.d[i] - (self.a[i]))
+
+        return coordinates
+
+    def find_coordinatesBC(self):
+        coordinates = []
+        for i in range(2):
+            coordinates.append(self.c[i] - (self.b[i]))
+
+        return coordinates
 
 
-v1 = Vector(10, 5)
-v2 = Vector(10, 5)  # длины
-v3 = Vector(4, 5)
-v4 = Vector(4, 5)
+def find_lengthAB(AB):
+    len = sqrt(AB[0] ** 2 + AB[1] ** 2)
+    return len
 
-a = [[1, 7], [1, 5]]
-b = [[1, 5], [2, -2]]  # координаты
-c = [[2, -2], [-3, 4]]
-d = [[-3, 4], [1, 7]]
 
-r = Rectangle(v1.lenVector(), v3.lenVector(), v2.lenVector(), v4.lenVector(), a, b, c, d)
+def find_lengthCD(CD):
+    len = sqrt(CD[0] ** 2 + CD[1] ** 2)
+    return len
 
-print('Векторы:', v1, v2, v3, v4)
-print('Сложение первого и второго:', v1 + v2)
-print('Вычитание второго и третьего:', v2 - v3)
-print('Умножение второго на число:', v2 * 3)
-print()
-print('Длина вектора', v1.lenVector())
-print('Длина вектора', v2.lenVector())
-print('Длина вектора', v3.lenVector())
-print('Длина вектора', v4.lenVector())
-print()
-r.check()
+
+def find_lengthAD(AD):
+    len = sqrt(AD[0] ** 2 + AD[1] ** 2)
+    return len
+
+
+def find_lengthBC(BC):
+    len = sqrt(BC[0] ** 2 + BC[1] ** 2)
+    return len
+
+
+def check(lenAB, lenCD):
+    if lenAB == lenCD:
+        return True
+
+
+# a = [0, -3]
+# b = [-1, 0]
+# c = [5, 2]
+# d = [6, -1]
+
+a = [0, 0]
+b = [0, 2]
+c = [4, 2]
+d = [4, 0]
+
+r = Rectangle(a, b, c, d)
+a = Vector(a[0], a[1])
+b = Vector(b[0], b[1])
+
+AB = r.find_coordinatesAB()
+CD = r.find_coordinatesCD()
+AD = r.find_coordinatesAD()
+BC = r.find_coordinatesBC()
+# print(AB, CD, AD, BC)
+
+lenAB = find_lengthAB(AB)
+lenCD = find_lengthCD(CD)
+lenAD = find_lengthAD(AD)
+lenBC = find_lengthBC(BC)
+# print(lenAB, lenCD, lenAD, lenBC)
+
+if check(lenAB, lenCD):
+    print('стороны AB и CD параллельны и равны')
+    if sqrt(lenAD ** 2 + lenCD ** 2) == sqrt(lenAB ** 2 + lenBC ** 2):
+        print('Диагонали равны! это прямоугольник!')
+
+print('Длина вектора', a.lenVector())
+print('Cложение векторов:', a.__add__(b))
+print('Вектор: ', a.__repr__())
+#print('Длина вектора', v.__sub__())
